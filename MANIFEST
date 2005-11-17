@@ -1,0 +1,7 @@
+Export.pm			Module file
+INSTALL				Installation documentation
+Makefile.PL			Makefile generator
+MANIFEST			This list of files
+README
+install.cmd			Simple shortcut batch file to make & install the module on Win32
+install.sh			Simple shortcut bash file to make & install the module on Unix/Linux/cygwin

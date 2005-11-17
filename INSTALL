@@ -1,0 +1,11 @@
+This is the INSTALL file for package ACME::PIA::Export
+
+To install this package, simply unzip the package file and
+change into the created directory. There you should only have
+to type
+
+perl Makefile.PL
+make
+make install
+
+NOTE: On Win32 systems you may have to type "nmake" instead of "make".
