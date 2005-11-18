@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ACME::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging</title>
+<link rev="made" href="mailto:" />
+</head>
+
+<body style="background-color: white">
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="block" style="background-color: #cccccc" valign="middle">
+<big><strong><span class="block">&nbsp;ACME::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging</span></strong></big>
+</td></tr>
+</table>
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+<!--
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#example">EXAMPLE</a></li>
+		<li><a href="#functions">FUNCTIONS</a></li>
+	</ul>
+
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#license">LICENSE</a></li>
+	<li><a href="#bugs">BUGS</a></li>
+</ul>
+-->
+<!-- INDEX END -->
+
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>ACME::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>This module is intended to help export data from the PIA messaging web application
+that comes with the free Arcor mail account at www.arcor.de</p>
+<p>It lets the user retrieve his data in CSV or XLS (not yet implemented) format or
+as hashes.</p>
+<p>If you don't know what PIA is, you will most probably not need this module.</p>
+<p>
+</p>
+<h2><a name="example">EXAMPLE</a></h2>
+<pre>
+        use ACME::PIA::Export;</pre>
+<pre>
+        my $pia = ACME::PIA::Export-&gt;new(</pre>
+<pre>
+                &quot;username&quot; =&gt; &quot;mylogin&quot;,
+                &quot;password&quot; =&gt; &quot;verysecret&quot;</pre>
+<pre>
+        );</pre>
+<pre>
+        $pia-&gt;export( &quot;contacts&quot; );</pre>
+<pre>
+        foreach my $contact ( $pia-&gt;entries() ) {
+        
+                print &quot;$contact-&gt;{NAME}, $contact-&gt;{VORNAME}\n&quot;;
+        
+        }</pre>
+<pre>
+        $pia-&gt;export_csv( file =&gt; &quot;C:/my/piacontacts.csv&quot; );</pre>
+<p>
+</p>
+<h2><a name="functions">FUNCTIONS</a></h2>
+<dl>
+<dt><strong><a name="item_new">new( [ key =&gt; value, ...] )</a></strong><br />
+</dt>
+<dd>
+Creates and returns a new ACME::PIA::Export object.
+</dd>
+<dd>
+<p>Parameters are given as key =&gt; value pairs. The most commonly used are ``username'' and ``password''.
+If you expirience problems you can also give the parameter ``DEBUG'' =&gt; 1
+to get verbose output from all functions.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_export">export( SCOPE )</a></strong><br />
+</dt>
+<dd>
+Export all objects for the given scope (contacts, calendar etc.) and stores them in the
+ACME::PIA::Export object.
+</dd>
+<dd>
+<p>ATTENTION: Only ``contacts'' scope is implemented up to now! Look out for future releases.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_entries"><code>entries()</code></a></strong><br />
+</dt>
+<dd>
+Retrieve a list with all entries as hashes.
+</dd>
+<p></p>
+<dt><strong><a name="item_entries_csv">entries_csv( [key =&gt; value, ...] ) [NOT YET IMPLEMENTED]</a></strong><br />
+</dt>
+<dd>
+Retrieve entries in csv format. Without arguments they are returned as a list of lines, including
+column headers as first row. The column headers can be turned off by setting the option 'headers =&gt; 0'.
+</dd>
+<dd>
+<p>If the parameter 'file =&gt; ``/path/to/file.csv''' is given, then the output is saved to the given file
+directly and the number of rows written (excluding the column headers) is returned.</p>
+</dd>
+<dd>
+<p>TODO: In future releases, there will be the option to pass along a ``fields'' paramter as a reference
+to an array that holds the names of the columns to be exported.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_entries_xls">entries_xls( file =&gt; /path/to/file.xls [, key =&gt; value, ...] ) [NOT YET IMPLEMENTED]</a></strong><br />
+</dt>
+<dd>
+Retrieve entries in xls format.
+</dd>
+<dd>
+<p>The parameter 'file =&gt; ``/path/to/file.xls''' is mandatory. The output is saved to the given file
+directly and the number of rows written (excluding the column headers) is returned.</p>
+</dd>
+<dd>
+<p>The column headers can be turned off by setting the option 'headers =&gt; 0'.</p>
+</dd>
+<dd>
+<p>TODO: In future releases, there will be the option to pass along a ``fields'' paramter as a reference
+to an array that holds the names of the columns to be exported.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_fields">fields( [SCOPE] )</a></strong><br />
+</dt>
+<dd>
+Retrieve a list with all the column names. If you already did an export(), you can call <a href="#item_fields"><code>fields()</code></a> without
+parameters to get the column names for the type of the last export. Otherwise, pass the name of the scope
+as a string.
+</dd>
+<dd>
+<p>You can rely on that the order of column names is the same as the field order returned by the export_XXX
+methods.</p>
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Christian Winter &lt;<a href="mailto:chrwin@cpan.org">chrwin@cpan.org</a>&gt;</p>
+<p>
+</p>
+<hr />
+<h1><a name="license">LICENSE</a></h1>
+<p>This peace of code is licensed under the same terms as Perl itself.
+You should have received a copy of this license together with your
+Perl version. You can read it at <a href="http://www.perl.org">http://www.perl.org</a> or by typing
+``perldoc <em>perlartistic</em>'' or ``perldoc <em>perlgpl</em>''</p>
+<p>
+</p>
+<hr />
+<h1><a name="bugs">BUGS</a></h1>
+<p>Please report those to the author.</p>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="block" style="background-color: #cccccc" valign="middle">
+<big><strong><span class="block">&nbsp;ACME::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>

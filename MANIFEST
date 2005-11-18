@@ -5,3 +5,4 @@ MANIFEST			This list of files
 README
 install.cmd			Simple shortcut batch file to make & install the module on Win32
 install.sh			Simple shortcut bash file to make & install the module on Unix/Linux/cygwin
+ACME-PIA-Export-0.016.html	HTML documentation for this module generated with pod2html

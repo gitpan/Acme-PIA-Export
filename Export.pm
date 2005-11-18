@@ -1,6 +1,6 @@
 package ACME::PIA::Export;
 
-our $VERSION = "0.015";
+our $VERSION = "0.016";
 
 use IO::Socket;
 
@@ -18,26 +18,28 @@ that comes with the free Arcor mail account at www.arcor.de
 It lets the user retrieve his data in CSV or XLS (not yet implemented) format or
 as hashes.
 
+If you don't know what PIA is, you will most probably not need this module.
+
 =head2 EXAMPLE
 
-use ACME::PIA::Export;
+	use ACME::PIA::Export;
 
-my $pia = ACME::PIA::Export->new(
+	my $pia = ACME::PIA::Export->new(
 
-	"username" => "mylogin",
-	"password" => "verysecret"
+		"username" => "mylogin",
+		"password" => "verysecret"
 
-);
+	);
 
-$pia->export( "contacts" );
+	$pia->export( "contacts" );
 
-foreach my $contact ( $pia->entries() ) {
+	foreach my $contact ( $pia->entries() ) {
 	
-	print "$contact->{NAME}, $contact->{VORNAME}\n";
+		print "$contact->{NAME}, $contact->{VORNAME}\n";
 	
-}
+	}
 
-$pia->export_csv( file => "C:/my/piacontacts.csv" );
+	$pia->export_csv( file => "C:/my/piacontacts.csv" );
 
 =head2 FUNCTIONS
 
@@ -56,6 +58,8 @@ to get verbose output from all functions.
 Export all objects for the given scope (contacts, calendar etc.) and stores them in the
 ACME::PIA::Export object.
 
+ATTENTION: Only "contacts" scope is implemented up to now! Look out for future releases.
+
 =item entries()
 
 Retrieve a list with all entries as hashes.
@@ -68,6 +72,9 @@ column headers as first row. The column headers can be turned off by setting the
 If the parameter 'file => "/path/to/file.csv"' is given, then the output is saved to the given file
 directly and the number of rows written (excluding the column headers) is returned.
 
+TODO: In future releases, there will be the option to pass along a "fields" paramter as a reference
+to an array that holds the names of the columns to be exported.
+
 =item entries_xls( file => /path/to/file.xls [, key => value, ...] ) [NOT YET IMPLEMENTED]
 
 Retrieve entries in xls format.
@@ -76,6 +83,18 @@ The parameter 'file => "/path/to/file.xls"' is mandatory. The output is saved to
 directly and the number of rows written (excluding the column headers) is returned.
 
 The column headers can be turned off by setting the option 'headers => 0'.
+
+TODO: In future releases, there will be the option to pass along a "fields" paramter as a reference
+to an array that holds the names of the columns to be exported.
+
+=item fields( [SCOPE] )
+
+Retrieve a list with all the column names. If you already did an export(), you can call fields() without
+parameters to get the column names for the type of the last export. Otherwise, pass the name of the scope
+as a string.
+
+You can rely on that the order of column names is the same as the field order returned by the entries_XXX
+methods.
 
 =back
 
@@ -316,6 +335,16 @@ sub get_response {
 sub entries {
 	my $self = shift;
 	return @{$self->{"data"}->{"entries"}};
+}
+
+sub fields {
+	my $self = shift;
+	my $what = (@_)?shift:$self->{"data"}->{"scope"};
+	
+	die "No scope configured. Either pass as parameter or invoke fields() after a successful export." unless( $what );
+	die "No such scope. Please check your spelling." unless( $ordered_fields{$what} );
+	
+	return @{$ordered_fields{$what}};
 }
 
 sub parseentry {
