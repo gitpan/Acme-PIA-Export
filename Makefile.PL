@@ -9,7 +9,7 @@ unshift @INC;
 # the contents of the Makefile that is written.
 
 WriteMakefile(
-    'NAME'         => 'ACME::PIA::Export',
+    'NAME'         => 'Acme::PIA::Export',
     'VERSION_FROM' => 'Export.pm', # finds $VERSION
     'AUTHOR'       => 'Chr. Winter <chrwin@cpan.org>',
     'PREREQ_PM'    => {

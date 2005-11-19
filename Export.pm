@@ -1,6 +1,6 @@
-package ACME::PIA::Export;
+package Acme::PIA::Export;
 
-our $VERSION = "0.016";
+our $VERSION = "0.017";
 
 use IO::Socket;
 
@@ -8,7 +8,7 @@ use IO::Socket;
 
 =head1 NAME
 
-ACME::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging
+Acme::PIA::Export - Export contacts, calendars or todos from Arcor's PIA messaging
 
 =head1 DESCRIPTION
 
@@ -22,9 +22,9 @@ If you don't know what PIA is, you will most probably not need this module.
 
 =head2 EXAMPLE
 
-	use ACME::PIA::Export;
+	use Acme::PIA::Export;
 
-	my $pia = ACME::PIA::Export->new(
+	my $pia = Acme::PIA::Export->new(
 
 		"username" => "mylogin",
 		"password" => "verysecret"
@@ -47,7 +47,7 @@ If you don't know what PIA is, you will most probably not need this module.
 
 =item new( [ key => value, ...] )
 
-Creates and returns a new ACME::PIA::Export object.
+Creates and returns a new Acme::PIA::Export object.
 
 Parameters are given as key => value pairs. The most commonly used are "username" and "password".
 If you expirience problems you can also give the parameter "DEBUG" => 1
@@ -56,7 +56,7 @@ to get verbose output from all functions.
 =item export( SCOPE )
 
 Export all objects for the given scope (contacts, calendar etc.) and stores them in the
-ACME::PIA::Export object.
+Acme::PIA::Export object.
 
 ATTENTION: Only "contacts" scope is implemented up to now! Look out for future releases.
 
@@ -249,7 +249,7 @@ sub send_request {
 		die "No Password given!";
 	}
 	if( ! $self->{"cfg"}->{"client"} ) {
-		$self->{"cfg"}->{"client"} = uc($ENV{"hostname"}) || sprintf("%s-%0.5i", "ACME-PIA-Export", rand(99999));
+		$self->{"cfg"}->{"client"} = uc($ENV{"hostname"}) || sprintf("%s-%0.5i", "Acme-PIA-Export", rand(99999));
 	}
 	my $requestbody = "$self->{cfg}->{username}~;~$self->{cfg}->{password}~;~$self->{cfg}->{client}~;~$scopes{$what};~export~;~O~;~~#~";
 	my $content_length = length($requestbody);
