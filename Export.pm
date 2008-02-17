@@ -1,6 +1,6 @@
 package Acme::PIA::Export;
 
-our $VERSION = "0.017";
+our $VERSION = "0.018";
 
 use IO::Socket;
 

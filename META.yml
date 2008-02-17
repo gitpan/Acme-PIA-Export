@@ -1,13 +1,11 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Acme-PIA-Export
-version:      0.017
-license:      perl
+version:      0.018
 version_from: Export.pm
 installdirs:  site
-requires: 
-    IO::Socket:                 0
-
+requires:
+    IO::Socket:                    0
 
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+generated_by: ExtUtils::MakeMaker version 6.30
