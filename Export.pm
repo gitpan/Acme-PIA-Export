@@ -1,6 +1,6 @@
 package Acme::PIA::Export;
 
-our $VERSION = "0.018";
+our $VERSION = "0.019";
 
 use IO::Socket;
 
@@ -155,7 +155,9 @@ our %fields = ( "contacts" => {
 	"HOMEPAGE_BUSI" => 55,
 	"NICKNAME_PRVT" => 62,
 	"LAST_MODIFIED" => 71
-}
+	},
+		"calendar" => {
+	}
 );
 
 
@@ -189,6 +191,8 @@ our %ordered_fields = (
 		"HOMEPAGE_BUSI" ,
 		"NICKNAME_PRVT" ,
 		"LAST_MODIFIED" 
+	],
+	"calendar" => [
 	]
 );
 
